@@ -6,11 +6,14 @@ const cors = require('cors');
 const admin = require('firebase-admin');
 
 // ✅ Import service account JSON สำหรับ Firebase Admin SDK
-const serviceAccount = JSON.parse(process.env.FIREBASE_ADMIN_SDK);
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
 // ✅ Initialize Firebase Admin SDK
+
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
+  // ...อื่น ๆ
 });
 
 // ✅ สร้าง Express app
