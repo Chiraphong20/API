@@ -4,8 +4,13 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const admin = require('firebase-admin');
+console.log('FIREBASE_SERVICE_ACCOUNT:', process.env.FIREBASE_SERVICE_ACCOUNT);
 
-// ✅ Import service account JSON สำหรับ Firebase Admin SDK
+if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+  console.error('FIREBASE_SERVICE_ACCOUNT env variable is missing!');
+  process.exit(1);
+}
+
 const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 serviceAccount.private_key = serviceAccount.private_key.replace(/\\n/g, '\n');
 
@@ -22,6 +27,8 @@ const app = express();
 // ✅ Middleware
 app.use(cors());
 app.use(express.json());
+const pushRoute = require('./routes/push');
+app.use('/api/push', pushRoute);
 
 // ✅ Import routes
 const registerRoute = require('./routes/register');
