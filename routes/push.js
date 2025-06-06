@@ -21,7 +21,7 @@ router.post('/', async (req, res) => {
       {
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${LINE_ACCESS_TOKEN}`,
+          Authorization: `Bearer ${CHANNEL_ACCESS_TOKEN}`,
         },
       }
     );
